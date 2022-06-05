@@ -6,11 +6,12 @@ import AntifraudPjService from '../services/AntifraudPj';
 class CompanyController {
   async create(req: Request, res: Response) {
     try {
-      const { insurance, cnpj } = req.body;
+      const { insurance, cnpj, priority } = req.body;
 
       const newCompany = await Company.create({
         cnpj,
         insurance,
+        priority,
         phase: 0,
       });
 

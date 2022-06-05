@@ -19,10 +19,11 @@ class CompanyController {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { insurance, cnpj } = req.body;
+                const { insurance, cnpj, priority } = req.body;
                 const newCompany = yield Company_1.default.create({
                     cnpj,
                     insurance,
+                    priority,
                     phase: 0,
                 });
                 const antifraudPj = new AntifraudPj_1.default(cnpj, newCompany[0].id);
