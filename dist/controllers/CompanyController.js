@@ -45,9 +45,9 @@ class CompanyController {
                 const { data } = req.body;
                 let body = Object.assign({}, data);
                 if (req.file) {
-                    const { key } = req.file;
+                    const { key, location } = req.file;
                     const cartao_info = yield (0, requestHelper_1.postRequest)('https://p5mbksp0bb.execute-api.us-east-2.amazonaws.com', '/prod/v1/forms', { filename: key }, 'wmfiz8bt8I2uS0huCn7GppDQLrgpu2KZm39bTW90');
-                    body.cartao_cnpj = cartao_info.data;
+                    body.cartao_cnpj = Object.assign(Object.assign({}, cartao_info.data), { file: location });
                 }
                 const newCompany = yield Company_1.default.update(id, body);
                 (0, responseHelper_1.buildResponse)(res, newCompany, true, 'Empresa atualizada com sucesso', 201);

@@ -42,14 +42,14 @@ class CompanyController {
 
       let body: any = { ...data };
       if (req.file) {
-        const { key }: any = req.file;
+        const { key, location }: any = req.file;
         const cartao_info = await postRequest(
           'https://p5mbksp0bb.execute-api.us-east-2.amazonaws.com',
           '/prod/v1/forms',
           { filename: key },
           'wmfiz8bt8I2uS0huCn7GppDQLrgpu2KZm39bTW90'
         );
-        body.cartao_cnpj = cartao_info.data;
+        body.cartao_cnpj = { ...cartao_info.data, file: location };
       }
       const newCompany = await Company.update(id, body);
 
