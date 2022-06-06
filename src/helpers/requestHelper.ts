@@ -19,7 +19,8 @@ const getRequest = async (url: string | undefined, endpoint: string) => {
 const postRequest = async (
   url: string | undefined,
   endpoint: string,
-  data: any = {}
+  data: any = {},
+  key: string = access_key
 ) => {
   const res = await axios({
     method: 'post',
@@ -27,7 +28,7 @@ const postRequest = async (
     baseURL: url,
     data,
     headers: {
-      'x-api-key': access_key,
+      'x-api-key': key,
     },
     timeout: 150000,
   });

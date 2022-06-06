@@ -28,14 +28,14 @@ const getRequest = (url, endpoint) => __awaiter(void 0, void 0, void 0, function
     return res;
 });
 exports.getRequest = getRequest;
-const postRequest = (url, endpoint, data = {}) => __awaiter(void 0, void 0, void 0, function* () {
+const postRequest = (url, endpoint, data = {}, key = access_key) => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield (0, axios_1.default)({
         method: 'post',
         url: endpoint,
         baseURL: url,
         data,
         headers: {
-            'x-api-key': access_key,
+            'x-api-key': key,
         },
         timeout: 150000,
     });

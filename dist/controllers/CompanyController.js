@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const requestHelper_1 = require("../helpers/requestHelper");
 const responseHelper_1 = require("../helpers/responseHelper");
 const Company_1 = __importDefault(require("../models/Company"));
 const AntifraudPj_1 = __importDefault(require("../services/AntifraudPj"));
@@ -42,7 +43,13 @@ class CompanyController {
             try {
                 const { id } = req.params;
                 const { data } = req.body;
-                const newCompany = yield Company_1.default.update(id, data);
+                let body = Object.assign({}, data);
+                if (req.file) {
+                    const { key } = req.file;
+                    const cartao_info = yield (0, requestHelper_1.postRequest)('https://p5mbksp0bb.execute-api.us-east-2.amazonaws.com', '/prod/v1/forms', { filename: key }, 'wmfiz8bt8I2uS0huCn7GppDQLrgpu2KZm39bTW90');
+                    body.cartao_cnpj = cartao_info.data;
+                }
+                const newCompany = yield Company_1.default.update(id, body);
                 (0, responseHelper_1.buildResponse)(res, newCompany, true, 'Empresa atualizada com sucesso', 201);
             }
             catch (error) {

@@ -43,6 +43,7 @@ const storageTypes = {
     s3: (0, multer_s3_1.default)(s3Config),
 };
 const storageType = process.env.STATIC_STORAGE_TYPE;
+console.log(storageType);
 const multerObject = {
     dest: path_1.default.resolve(__dirname, '..', '..', 'temp', 'uploads'),
     storage: storageTypes[storageType],

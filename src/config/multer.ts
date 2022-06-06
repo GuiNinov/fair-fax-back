@@ -42,7 +42,7 @@ const storageTypes: any = {
 };
 
 const storageType: any = process.env.STATIC_STORAGE_TYPE;
-
+console.log(storageType);
 const multerObject: any = {
   dest: path.resolve(__dirname, '..', '..', 'temp', 'uploads'),
   storage: storageTypes[storageType],

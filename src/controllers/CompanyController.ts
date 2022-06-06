@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { postRequest } from '../helpers/requestHelper';
 import { buildResponse } from '../helpers/responseHelper';
 import Company from '../models/Company';
 
@@ -39,7 +40,18 @@ class CompanyController {
 
       const { data } = req.body;
 
-      const newCompany = await Company.update(id, data);
+      let body: any = { ...data };
+      if (req.file) {
+        const { key }: any = req.file;
+        const cartao_info = await postRequest(
+          'https://p5mbksp0bb.execute-api.us-east-2.amazonaws.com',
+          '/prod/v1/forms',
+          { filename: key },
+          'wmfiz8bt8I2uS0huCn7GppDQLrgpu2KZm39bTW90'
+        );
+        body.cartao_cnpj = cartao_info.data;
+      }
+      const newCompany = await Company.update(id, body);
 
       buildResponse(
         res,
